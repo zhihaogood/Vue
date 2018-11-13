@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="./lib/vue-2.4.0.js"></script>
+</head>
+<style>
+	/*v-enter这是一个时间点*/
+	/*是进入之前元素的起始状态此时还没有开始进入*/
+	/*v-leave-to 这是一个时间点*/
+	/*是动画离开之后离开的终止状态此时元素动画已经结束了*/
+	.v-enter,
+	.v-leave-to{
+		opacity: 0;
+		transform: translateX(200px);
+	}
+	.v-enter-active,
+	/*入场动画的时间段*/
+	.v-leave-active{
+		/*离场动画*/
+		transition: all 0.8s ease;
+	}
+</style>
+<body>
+	<div id="app">
+		<input type="button" value="toggle" @click="flag=!flag">
+		<transition>
+		<h3 v-if="flag">这是一只二狗子</h3>
+		</transition>
+	</div>
+	<script>
+		let vm = new Vue({
+			el:'#app',
+			data:{
+				flag:false
+			},
+			methods:{}
+		});
+	</script>
+</body>
+</html>

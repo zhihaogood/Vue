@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+	<div id="app">
+		<!-- 父组件向子组件传递方法使用的是时间绑定机制v-on当我们自定义了一个事件属性之后那么子组件就能够通过某些方式来调用传递进去的这个方法了 -->
+		 <com2 @func="show"></com2>
+	</div>
+	<template id="tmp1">
+		<div>
+			<h1>这是子组件</h1>
+			<input type="button" value="这是子组件中的按钮-点击它触发父组件传递过来的func方法" @click="myclick">
+		</div>
+	</template>
+	<script>
+	// 定义了一个字面量类型的组件模板对象
+	let com2={
+		template:'#tmp1',
+		//通过指定了一个id表示说要去加载这个指定的id的template元素中的内容当作组件的html结构
+		data(){
+			return{
+				sonmsg:{name:'二狗子',age:38}
+			}
+		},
+		methods:{
+			myclick(){
+				//当点击子组件的按钮的时候如何拿到父组件传递过来的func方法并调用这个方法
+				// emit英文愿意是触发调用发射的意思
+				this.$emit('func',this.sonmsg)
+			}
+		}
+	}
+
+
+		let vm=new Vue({
+			el:'#app',
+			data:{
+				datamsgFormSon:null
+			},
+			methods:{
+				show(data){
+					this.datamsgFormSon=data
+				}
+			},
+			components:{
+				com2
+			}
+		});
+	</script>
+</body>
+</html>

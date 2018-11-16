@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="./lib/vue-2.4.0.js"></script>
+  	<!-- 1. 安装 vue-router 路由模块 -->
+  	<script src="./lib/vue-router-3.0.1.js"></script>
+  	<style>
+  	/*当router-link被点击的时候会有一个默认的类样式router-link-active可以通过css给该类名添加一些样式事件当前选中的链接高量*/
+		.router-link-active {
+	      color: red;
+	      font-weight: 800;
+	      font-style: italic;
+	      font-size: 80px;
+	      text-decoration: underline;
+	      background-color: green;
+	    }
+
+	    .v-enter,
+    	.v-leave-to {
+      	opacity: 0;
+      	transform: translateX(140px);
+    }
+
+    .v-enter-active,
+    .v-leave-active {
+      transition: all 0.5s ease;
+    }
+		
+  	</style>
+</head>
+<body>
+	<div id="app">
+	<!-- //使用router-link渲染a标签 -->
+	<!-- 可以通过设置to设置路由的跳转省略# -->
+	<!-- 可以通过tag来设置渲染的标签默认渲染为a标签如果渲染为其他标签也会加上点击事件实现跳转 -->
+		<!-- <a href="#/login">登录</a> -->
+		<router-link tag="span" to="/login">登录</router-link>
+		<router-link to="/register">注册</router-link>
+		<!-- <a href="#/register">注册</a> -->
+		<transition mode="out-in">
+		<router-view></router-view>
+		</transition>
+	</div>
+	<script>
+		//组件模板对象
+		let login ={
+			template:'<h1>登录组件</h1>'
+		}
+		let register ={
+			template:'<h1>注册组件</h1>'
+		}
+
+		// 创建一个路由对象当导入vue-router包之后再window全局对象中就有了一个路由的构造函数叫做VueRouter
+		// 在new路由对象的时候可以为构造函数传递一个配置对象
+		let router = new VueRouter({
+			// route这个配置对象中的route表示[路由匹配规则]的意思
+			routes:[
+				// 每个路由规则都是一个对象这个规则对象身上有两个必须的属性
+				// 属性1是path表示监听哪个路由链接地址
+				// 属性2是component表示如果路由前面匹配到的path则展示compoent属性对应的那个组件
+				// component的属性值必须是一个组件的模板对象不能是组件的引用名称
+
+
+
+				//通过redirect来将根路径重定向到某个路径
+				// {path:'/login',component:login},
+				// {path:'/register',component:register}
+				{path: '/',redirect: '/login'},
+				{path:'/login',component:login},
+				{path:'/register',component:register}
+			]
+			// 该类名可以进行自定义在路由构造函数的配置对象中通过linkActiveClass属性进行自定义当前选中的样式高量
+			// linkActiveClass:'myactive'
+
+		})
+
+
+		let vm =new Vue({
+			el:'#app',
+			data:{},
+			methods:{},
+			router
+		});
+	</script>
+</body>
+</html>
